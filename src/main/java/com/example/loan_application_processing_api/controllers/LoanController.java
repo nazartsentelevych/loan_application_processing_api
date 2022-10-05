@@ -1,6 +1,6 @@
 package com.example.loan_application_processing_api.controllers;
 
-import com.example.loan_application_processing_api.entities.LoanApplication;
+import com.example.loan_application_processing_api.entities.LoanApplicationEntity;
 import com.example.loan_application_processing_api.pojo.LoanAddPOJO;
 import com.example.loan_application_processing_api.services.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,22 +21,22 @@ public class LoanController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LoanApplication> findLoanId(@PathVariable long id){
+    public ResponseEntity<LoanApplicationEntity> findLoanId(@PathVariable long id){
         return loanService.findOne(id)
                 .map(applicationEntity -> ResponseEntity.status(HttpStatus.OK).body(applicationEntity))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NO_CONTENT).body(null));
     }
 
     @GetMapping
-    public ResponseEntity<List<LoanApplication>> findLoans(){
-        List<LoanApplication> loanApplicationEntities = loanService.findAll();
-        return loanApplicationEntities.isEmpty() ?
+    public ResponseEntity<List<LoanApplicationEntity>> findLoans(){
+        List<LoanApplicationEntity> loanApplicationEntityEntities = loanService.findAll();
+        return loanApplicationEntityEntities.isEmpty() ?
                 ResponseEntity.status(HttpStatus.NO_CONTENT).body(null) :
                 ResponseEntity.status(HttpStatus.OK).body(loanService.findAll());
     }
 
     @PostMapping
-    public ResponseEntity<LoanApplication> addLoan(@Valid @RequestBody LoanAddPOJO loanAddPOJO){
+    public ResponseEntity<LoanApplicationEntity> addLoan(@Valid @RequestBody LoanAddPOJO loanAddPOJO){
         return loanService.add(loanAddPOJO)
                 .map(loanApplication -> ResponseEntity.status(HttpStatus.CREATED).body(loanApplication))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));

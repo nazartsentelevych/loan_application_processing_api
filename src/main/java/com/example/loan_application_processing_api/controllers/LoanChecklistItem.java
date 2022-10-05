@@ -1,6 +1,6 @@
 package com.example.loan_application_processing_api.controllers;
 
-import com.example.loan_application_processing_api.entities.LoanApplicationChecklistItem;
+import com.example.loan_application_processing_api.entities.LoanApplicationChecklistItemEntity;
 import com.example.loan_application_processing_api.pojo.LoanCheckListItemAddPOJO;
 import com.example.loan_application_processing_api.services.LoanCheckListItemService;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -32,10 +32,10 @@ public class LoanChecklistItem {
             @ApiResponse(responseCode = "404", description = "Invalid object ID", content = @Content)
     })
     @PostMapping
-    public ResponseEntity<LoanApplicationChecklistItem> addLoan(@Valid @RequestBody LoanCheckListItemAddPOJO loanCheckListItemAddPOJO){
+    public ResponseEntity<LoanApplicationChecklistItemEntity> addLoan(@Valid @RequestBody LoanCheckListItemAddPOJO loanCheckListItemAddPOJO){
 
         return loanCheckListItemService.add(loanCheckListItemAddPOJO)
-                .map(loanApplicationChecklistItem -> ResponseEntity.status(HttpStatus.CREATED).body(loanApplicationChecklistItem))
+                .map(loanApplicationChecklistItemEntity -> ResponseEntity.status(HttpStatus.CREATED).body(loanApplicationChecklistItemEntity))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
     }
 

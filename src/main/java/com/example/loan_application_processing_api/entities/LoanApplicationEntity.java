@@ -15,7 +15,8 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-public class LoanApplication {
+@Table(name = "loan_application")
+public class LoanApplicationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition="BIGINT")
@@ -30,7 +31,7 @@ public class LoanApplication {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "checkListTask")
     @JsonManagedReference
-    private Set<LoanApplicationChecklistItem> loanApplicationChecklistItems;
+    private Set<LoanApplicationChecklistItemEntity> loanApplicationChecklistItemEntities;
 
 
 }

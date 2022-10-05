@@ -14,7 +14,8 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @NoArgsConstructor
-public class LoanApplicationChecklistItem {
+@Table(name = "loan_application_checklist_item")
+public class LoanApplicationChecklistItemEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition="BIGINT")
@@ -23,7 +24,7 @@ public class LoanApplicationChecklistItem {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JsonBackReference
-    private LoanApplication checkListTask;
+    private LoanApplicationEntity checkListTask;
 
     @NotNull
     @Type(type = "org.hibernate.type.NumericBooleanType")

@@ -1,7 +1,7 @@
 package com.example.loan_application_processing_api.services;
 
-import com.example.loan_application_processing_api.entities.LoanApplication;
-import com.example.loan_application_processing_api.entities.LoanApplicationChecklistItem;
+import com.example.loan_application_processing_api.entities.LoanApplicationEntity;
+import com.example.loan_application_processing_api.entities.LoanApplicationChecklistItemEntity;
 import com.example.loan_application_processing_api.pojo.LoanCheckListItemAddPOJO;
 import com.example.loan_application_processing_api.repositories.LoanChecklistItemEntityRepository;
 import com.example.loan_application_processing_api.repositories.LoanEntityRepository;
@@ -21,23 +21,23 @@ public class LoanCheckListItemService {
         this.loanEntityRepository = loanEntityRepository;
     }
 
-    public Optional<LoanApplicationChecklistItem> findOne(Long id){
+    public Optional<LoanApplicationChecklistItemEntity> findOne(Long id){
         return loanChecklistItemEntityRepository.findById(id);
     }
 
 
-    public Optional<LoanApplicationChecklistItem> add(LoanCheckListItemAddPOJO loanCheckListItemAddPOJO){
+    public Optional<LoanApplicationChecklistItemEntity> add(LoanCheckListItemAddPOJO loanCheckListItemAddPOJO){
 
-        Optional<LoanApplication> loanApplication = loanEntityRepository
+        Optional<LoanApplicationEntity> loanApplication = loanEntityRepository
                 .findById(loanCheckListItemAddPOJO.getChecklistTaskId());
 
         return loanApplication
                 .map(loanApplicationFind -> {
-                    LoanApplicationChecklistItem loanApplicationChecklistItem = new LoanApplicationChecklistItem();
-                    loanApplicationChecklistItem.setCheckListTask(loanApplicationFind);
-                    loanApplicationChecklistItem.setStatus(loanCheckListItemAddPOJO.getStatus());
-                    loanApplicationChecklistItem.setNotes(loanCheckListItemAddPOJO.getNotes());
-                    return Optional.ofNullable(loanChecklistItemEntityRepository.save(loanApplicationChecklistItem));
+                    LoanApplicationChecklistItemEntity loanApplicationChecklistItemEntity = new LoanApplicationChecklistItemEntity();
+                    loanApplicationChecklistItemEntity.setCheckListTask(loanApplicationFind);
+                    loanApplicationChecklistItemEntity.setStatus(loanCheckListItemAddPOJO.getStatus());
+                    loanApplicationChecklistItemEntity.setNotes(loanCheckListItemAddPOJO.getNotes());
+                    return Optional.of(loanChecklistItemEntityRepository.save(loanApplicationChecklistItemEntity));
                 })
                 .orElseGet(Optional::empty);
     }
