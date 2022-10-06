@@ -1,7 +1,6 @@
 package com.example.loan_application_processing_api.entities;
 
 import com.example.loan_application_processing_api.enums.entity.Loan;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,12 +10,11 @@ import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Getter
 @Setter
 @NoArgsConstructor
 @Table(name = "loan_application")
-public class LoanApplicationEntity {
+public class LoanEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition="BIGINT")
@@ -29,9 +27,10 @@ public class LoanApplicationEntity {
     @Enumerated(EnumType.STRING)
     private Loan status;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "checkListTask")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "checkListTask")
     @JsonManagedReference
-    private Set<LoanApplicationChecklistItemEntity> loanApplicationChecklistItemEntities;
+    private Set<LoanChecklistItemEntity> loanApplicationChecklistItemEntities;
 
-
+    @Column(columnDefinition="BIGINT")
+    private Long userId;
 }

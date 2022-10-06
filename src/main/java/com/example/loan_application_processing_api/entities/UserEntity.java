@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.UniqueElements;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -23,8 +22,6 @@ public class UserEntity {
     private String username;
     @NotNull
     private String password;
-    @NotNull
-    private Boolean isAdmin;
     @NotNull
     private Boolean isDeleted;
 }
